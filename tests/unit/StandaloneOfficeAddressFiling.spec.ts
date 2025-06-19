@@ -16,7 +16,7 @@ import mockRouter from './mockRouter'
 import { BusinessConfigBen } from '@/resources/BEN'
 import { CorpTypeCd } from '@bcrs-shared-components/corp-type-module'
 import * as utils from '@/utils'
-import { AuthorizationRoles } from '@/enums'
+import { PublicUserActions } from './test-data/authorizedActions'
 
 // suppress various warnings:
 // - "Unknown custom element <affix>" warnings
@@ -62,7 +62,7 @@ describe('Standalone Office Address Filing - Part 1 - UI', () => {
     // init store
     businessStore.setIdentifier('CP0001191')
     businessStore.setLegalType(CorpTypeCd.COOP)
-    rootStore.setAuthRoles([AuthorizationRoles.PUBLIC_USER])
+    rootStore.setAuthorizedActions(PublicUserActions)
   })
 
   it('renders the filing sub-components properly', () => {
@@ -150,7 +150,7 @@ describe('Standalone Office Address Filing - Part 1 - UI', () => {
     localVue.use(VueRouter)
     const router = mockRouter.mock()
     router.push({ name: 'standalone-addresses', query: { filingId: '0' } }) // new filing id
-    rootStore.setAuthRoles([AuthorizationRoles.PUBLIC_USER])
+    rootStore.setAuthorizedActions(PublicUserActions)
 
     const wrapper = mount(StandaloneOfficeAddressFiling, {
       localVue,
@@ -694,7 +694,7 @@ describe('Standalone Office Address Filing - Part 3 - Submitting', () => {
     // set necessary session variables
     sessionStorage.setItem('BASE_URL', 'https://base.url/')
     sessionStorage.setItem('CURRENT_ACCOUNT', '{ "id": "2288" }')
-    rootStore.setAuthRoles([AuthorizationRoles.PUBLIC_USER])
+    rootStore.setAuthorizedActions(PublicUserActions)
 
     const localVue = createLocalVue()
     localVue.use(VueRouter)
@@ -755,7 +755,7 @@ describe('Standalone Office Address Filing - Part 3 - Submitting', () => {
     'is clicked and payment action is not required', async () => {
     // set necessary session variables
     sessionStorage.setItem('BASE_URL', 'https://base.url/')
-    rootStore.setAuthRoles([AuthorizationRoles.PUBLIC_USER])
+    rootStore.setAuthorizedActions(PublicUserActions)
 
     // create local Vue and mock router
     const localVue = createLocalVue()
@@ -828,7 +828,7 @@ describe('Standalone Office Address Filing - Part 3 - Submitting', () => {
     'and the File & Pay button is clicked and payment action is not required', async () => {
     // set necessary session variables
     sessionStorage.setItem('BASE_URL', 'https://base.url/')
-    rootStore.setAuthRoles([AuthorizationRoles.PUBLIC_USER])
+    rootStore.setAuthorizedActions(PublicUserActions)
 
     // create local Vue and mock router
     const localVue = createLocalVue()
@@ -1058,7 +1058,7 @@ describe('Standalone Office Address Filing - Part 3B - Submitting (BCOMP)', () =
     // set necessary session variables
     sessionStorage.setItem('BASE_URL', 'https://base.url/')
     sessionStorage.setItem('CURRENT_ACCOUNT', '{ "id": "2288" }')
-    rootStore.setAuthRoles([AuthorizationRoles.PUBLIC_USER])
+    rootStore.setAuthorizedActions(PublicUserActions)
 
     const localVue = createLocalVue()
     localVue.use(VueRouter)
@@ -1119,7 +1119,7 @@ describe('Standalone Office Address Filing - Part 3B - Submitting (BCOMP)', () =
     'is clicked and payment action is not required', async () => {
     // set necessary session variables
     sessionStorage.setItem('BASE_URL', 'https://base.url/')
-    rootStore.setAuthRoles([AuthorizationRoles.PUBLIC_USER])
+    rootStore.setAuthorizedActions(PublicUserActions)
 
     // create local Vue and mock router
     const localVue = createLocalVue()
@@ -1955,7 +1955,7 @@ describe('Standalone Office Address Filing - payment required error', () => {
     sessionStorage.setItem('AUTH_WEB_URL', 'https://auth.web.url/')
     const get = sinon.stub(axios, 'get')
 
-    rootStore.setAuthRoles([AuthorizationRoles.PUBLIC_USER])
+    rootStore.setAuthorizedActions(PublicUserActions)
 
     get.withArgs('businesses/CP0001191/tasks')
       .returns(new Promise(resolve => resolve({ data: { tasks: [] } })))
